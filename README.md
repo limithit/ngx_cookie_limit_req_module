@@ -6,10 +6,10 @@ The *ngx_cookie_limit_req_module* module is used generate token according to coo
 
 Table of Contents
 =================
-* [cookie_limit_req_zone](#dynamic_limit_req_zone)
-* [cookie_limit_req_zone](#dynamic_limit_req)
-* [cookie_limit_req_log_level](#dynamic_limit_req_log_level)
-* [cookie_limit_req_status](#dynamic_limit_req_status)
+* [cookie_limit_req_zone](#cookie_limit_req_zone)
+* [cookie_limit_req_zone](#cookie_limit_req)
+* [cookie_limit_req_log_level](#cookie_limit_req_log_level)
+* [cookie_limit_req_status](#cookie_limit_req_status)
 * [Installation](#Installation)
 * [About](#About)
 * [Extend](#Extend)
@@ -99,16 +99,16 @@ Sets the status code to return in response to rejected requests.
     make install
 
 
-###  Option #2: Compile dynamic module for Nginx
+###  Option #2: Compile cookie module for Nginx
 
-Starting from NGINX 1.9.11, you can also compile this module as a dynamic module, by using the ```--add-dynamic-module=PATH``` option instead of ```--add-module=PATH``` on the ```./configure``` command line above. And then you can explicitly load the module in your ```nginx.conf``` via the [load_module](http://nginx.org/en/docs/ngx_core_module.html#load_module) directive, for example,
+Starting from NGINX 1.9.11, you can also compile this module as a cookie module, by using the ```--add-cookie-module=PATH``` option instead of ```--add-module=PATH``` on the ```./configure``` command line above. And then you can explicitly load the module in your ```nginx.conf``` via the [load_module](http://nginx.org/en/docs/ngx_core_module.html#load_module) directive, for example,
 
 ```nginx
     load_module /path/to/modules/ngx_cookie_limit_req_module.so;
 ```
 
 ## Donate
-The developers work tirelessly to improve and develop ngx_dynamic_limit_req_module. Many hours have been put in to provide the software as it is today, but this is an extremely time-consuming process with no financial reward. If you enjoy using the software, please consider donating to the devs, so they can spend more time implementing improvements.
+The developers work tirelessly to improve and develop ngx_cookie_limit_req_module. Many hours have been put in to provide the software as it is today, but this is an extremely time-consuming process with no financial reward. If you enjoy using the software, please consider donating to the devs, so they can spend more time implementing improvements.
 
  ### Alipay:
 ![Alipay](https://github.com/limithit/shellcode/blob/master/alipay.png)
