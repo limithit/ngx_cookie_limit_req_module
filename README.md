@@ -62,7 +62,7 @@ Sets the status code to return in response to rejected requests.
         sendfile        on;
         keepalive_timeout  65;
         
-cookie_limit_req_zone $binary_remote_addr zone=two:10m rate=30r/m redis=127.0.0.1 block_second=300 cookie_max=5;
+cookie_limit_req_zone $binary_remote_addr zone=two:10m rate=30r/s redis=127.0.0.1 block_second=300 cookie_max=5;
 cookie_limit_req zone=two burst=30 nodelay;
 cookie_limit_req_status 403;
 
