@@ -12,7 +12,6 @@ Table of Contents
 * [cookie_limit_req_status](#cookie_limit_req_status)
 * [Installation](#Installation)
 * [About](#About)
-* [Extend](#Extend)
 * [Donate](#Donate)
 
 ## cookie_limit_req_zone
@@ -112,10 +111,6 @@ The developers work tirelessly to improve and develop ngx_cookie_limit_req_modul
 
  ### Alipay:
 ![Alipay](https://github.com/limithit/shellcode/blob/master/alipay.png)
-
-## Extend
-This module can be works with [RedisPushIptables](https://github.com/limithit/RedisPushIptables),  the application layer matches then the network layer to intercept. Although network layer interception will save resources, there are also deficiencies. Assuming that only one specific interface is filtered and no other interfaces are filtered, those that do not need to be filtered will also be inaccessible. Although precise control is not possible at the network layer or the transport layer, it can be precisely controlled at the application layer. Users need to weigh which solution is more suitable for the event at the time.
-
 
 Author
 Gandalf zhibu1991@gmail.com
