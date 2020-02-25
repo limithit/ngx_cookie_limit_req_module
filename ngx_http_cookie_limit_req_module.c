@@ -182,7 +182,7 @@ static ngx_int_t ngx_http_limit_req_handler(ngx_http_request_t *r) {
 				}
 			}
 	}
-
+   #if (NGX_DEBUG)
 	ngx_list_part_t *part;
 	ngx_table_elt_t *h;
 	ngx_uint_t b;
@@ -200,12 +200,10 @@ static ngx_int_t ngx_http_limit_req_handler(ngx_http_request_t *r) {
 			h = part->elts;
 			b = 0;
 		}
-		ngx_log_error(lrcf->limit_log_level, r->connection->log, 0,
-                                "http header_all: \"%s: %V\"", h[b].key.data, &h[b].value);
-		
 		ngx_log_debug2(NGX_LOG_DEBUG_HTTP, r->connection->log, 0,
 				"http header_all: \"%s: %V\"", h[b].key.data, &h[b].value);
 	}
+    #endif
 
 	ngx_table_elt_t **cookies;
 	ngx_md5_t md5;
