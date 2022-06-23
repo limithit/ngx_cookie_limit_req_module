@@ -205,9 +205,13 @@ static ngx_int_t ngx_http_limit_req_handler(ngx_http_request_t *r) {
 	}
     #endif
 
-	ngx_table_elt_t **cookies;
 	ngx_md5_t md5;
+	ngx_table_elt_t *cookies;
+#if nginx_version >= 1023000
+	cookies = r->headers_in.cookie;
+#else
 	cookies = r->headers_in.cookies.elts;
+#endif
 	char msg[1024];
 	const char *fmt_cookies = "%.*s";
 	u_char md5_buf[16], md5_buf2[32];
@@ -217,10 +221,10 @@ static ngx_int_t ngx_http_limit_req_handler(ngx_http_request_t *r) {
 
 	if (cookies != NULL && !c->err && c != NULL) {
 		(void) snprintf((char *) msg, sizeof(msg), fmt_cookies,
-				cookies[0]->value.len, cookies[0]->value.data);
+				cookies->value.len, cookies->value.data);
 
 		ngx_md5_init(&md5);
-		ngx_md5_update(&md5, msg, cookies[0]->value.len);
+		ngx_md5_update(&md5, msg, cookies->value.len);
 		ngx_md5_final(md5_buf, &md5);
 		int i;
 		for (i = 0; i < 16; i++) {
@@ -235,7 +239,7 @@ static ngx_int_t ngx_http_limit_req_handler(ngx_http_request_t *r) {
 			redisCommand(c, "DEL [%s]Independent_IP", Host);
 		}
 		ngx_log_debug2(NGX_LOG_DEBUG_HTTP, r->connection->log, 0,
-						"cookie: \"%V\" [%s]\n", &cookies[0]->value, (char *)md5_buf2);
+						"cookie: \"%V\" [%s]\n", &cookies->value, (char *)md5_buf2);
 
 	}
 
