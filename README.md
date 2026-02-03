@@ -1,5 +1,5 @@
 ﻿# ngx_cookie_limit_req_module
- 
+
 ## Introduction
 
 The *ngx_cookie_limit_req_module* module not only limits the access rate of cookies but also limits the number of malicious ip forged cookies.
@@ -10,18 +10,19 @@ Table of Contents
 * [cookie_limit_req_zone](#cookie_limit_req)
 * [cookie_limit_req_log_level](#cookie_limit_req_log_level)
 * [cookie_limit_req_status](#cookie_limit_req_status)
+* [Pre-built Packages (Ubuntu / Debian)](#pre-built-packages-ubuntu--debian)
 * [Installation](#Installation)
 * [About](#About)
 * [Donate](#Donate)
 
 ## cookie_limit_req_zone
-Sets parameters for a shared memory zone that will keep states for various keys. In particular, the state stores the current number of excessive requests. The key can contain text, variables, and their combination. Requests with an empty key value are not accounted. 
+Sets parameters for a shared memory zone that will keep states for various keys. In particular, the state stores the current number of excessive requests. The key can contain text, variables, and their combination. Requests with an empty key value are not accounted.
 ```
  Syntax:  cookie_limit_req_zone key zone=name:size rate=rate [sync]  redis=127.0.0.1 block_second=time cookie_max=number;
  Default: —
  Context: http
  ```
- 
+
 ## cookie_limit_req
 Sets the shared memory zone and the maximum burst size of requests. If the requests rate exceeds the rate configured for a zone, their processing is delayed such that requests are processed at a defined rate. Excessive requests are delayed until their number exceeds the maximum burst size in which case the request is terminated with an error. By default, the maximum burst size is equal to zero.
 ```
@@ -38,7 +39,7 @@ Sets the desired logging level for cases when the server refuses to process requ
  Context: http, server, location
 ```
 
-## cookie_limit_req_status 
+## cookie_limit_req_status
 Sets the status code to return in response to rejected requests.
 ```
  Syntax:  cookie_limit_req_status code;
@@ -46,7 +47,7 @@ Sets the status code to return in response to rejected requests.
  Context: http, server, location, if
 ```
 
-     
+
 
 ## Configuration example：
 ```nginx
@@ -60,13 +61,13 @@ Sets the status code to return in response to rejected requests.
         default_type  application/octet-stream;
         sendfile        on;
         keepalive_timeout  65;
-        
+
 cookie_limit_req_zone $http_cookie zone=two:10m rate=30r/s redis=127.0.0.1 block_second=300 cookie_max=5;
 cookie_limit_req zone=two burst=30 nodelay;
 cookie_limit_req_status 403;
 
-        
-        
+
+
         server {
             listen       80;
             server_name  localhost;
@@ -80,20 +81,41 @@ cookie_limit_req_status 403;
             }
         }
     }
-   
+
 ```
+
+## Pre-built Packages (Ubuntu / Debian)
+
+Pre-built packages for this module are freely available from the GetPageSpeed repository:
+
+```bash
+# Install the repository keyring
+sudo install -d -m 0755 /etc/apt/keyrings
+curl -fsSL https://extras.getpagespeed.com/deb-archive-keyring.gpg \
+  | sudo tee /etc/apt/keyrings/getpagespeed.gpg >/dev/null
+
+# Add the repository (Ubuntu example - replace 'ubuntu' and 'jammy' for your distro)
+echo "deb [signed-by=/etc/apt/keyrings/getpagespeed.gpg] https://extras.getpagespeed.com/ubuntu jammy main" \
+  | sudo tee /etc/apt/sources.list.d/getpagespeed-extras.list
+
+# Install nginx and the module
+sudo apt-get update
+sudo apt-get install nginx nginx-module-cookie-limit
+```
+
+The module is automatically enabled after installation. Supported distributions include Debian 12/13 and Ubuntu 20.04/22.04/24.04 (both amd64 and arm64). See [the complete setup instructions](https://apt-nginx-extras.getpagespeed.com/apt-setup/).
 
 ## Installation
 
 ###  Option #1: Compile Nginx with module bundled
     cd redis-4.0**version**/deps/hiredis
-    make 
-    make install 
+    make
+    make install
     echo /usr/local/lib >> /etc/ld.so.conf
     ldconfig
-    
+
     cd nginx-**version**
-    ./configure --add-module=/path/to/this/ngx_cookie_limit_req_module 
+    ./configure --add-module=/path/to/this/ngx_cookie_limit_req_module
     make
     make install
 
